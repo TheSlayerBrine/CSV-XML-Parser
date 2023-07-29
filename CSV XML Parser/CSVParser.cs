@@ -11,8 +11,8 @@ namespace CsvXmlParser
        public string RawCSV;
         public string[] csvLines;
         public List<Item> items;
-
-        
+    
+ 
         
         public void SetRawCSV (string path) {
         RawCSV= System.IO.File.ReadAllText (path);
@@ -20,24 +20,33 @@ namespace CsvXmlParser
         }
         public void SplitData()
         {
+            var newList = new List<Item>();
             for(int i = 1; i < csvLines.Length; i++)
             {
                 string[] rowData = csvLines[i].Split(',');
+                int convId = Convert.ToInt32(rowData[0]);
+                double convName = Convert.ToDouble(rowData[1]);
                 var newItem = new Item
                 {
-                    Id = rowData[1],
-                    Price = rowData[2],
-                    Name = rowData[3],
+                    Id = convId,
+                    Price = rowData[1],
+                    Name = convName,
 
                 };
-                items.Add(newItem);
+                newList.Add(newItem);
+           
             }
+            items = newList;
+           
         }
         public void OutputTest()
         {
-            for(int i =1; i< items.Count;i++ )
+            for(int i =0; i< items.Count;i++ )
             {
-                Console.WriteLine(items[i] );
+                Console.Write(items[i].Id );
+                Console.Write(items[i].Price);
+                Console.Write(items[i].Name);
+                Console.WriteLine();
             }
 
         }

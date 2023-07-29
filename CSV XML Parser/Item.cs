@@ -8,8 +8,8 @@ namespace CsvXmlParser
 {
     public class Item
     {
-        public string Id;
-        public string Name;
+        public int Id;
+        public double Name;
         public string Price;
     }
 }
