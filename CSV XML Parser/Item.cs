@@ -9,7 +9,7 @@ namespace CsvXmlParser
     public class Item
     {
         public int Id;
-        public double Name;
-        public string Price;
+        public string Name;
+        public double Price;
     }
 }
