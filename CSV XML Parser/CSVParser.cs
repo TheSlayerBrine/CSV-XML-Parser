@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 namespace CsvXmlParser
 {
     public class CSVParser : ICSVParser
-    {      
-        public List<Item> items;  
-        
+    {            
         public string ReadCsvFileToString (string path)
         {
             var RawCSV = System.IO.File.ReadAllText(path);
@@ -70,17 +68,17 @@ namespace CsvXmlParser
                 newList.Add(newItem);
            
             }
-            items = newList;          
+            Stock.SetStock(newList);          
         }
         public void OutputTest()
         {
-            for(int i =0; i< items.Count;i++ )
+            for(int i =0; i< Stock.GetStock().Count;i++ )
             {
-                Console.Write(items[i].Id );
+                Console.Write(Stock.GetStock()[i].Id );
                 Console.Write (",");              
-                Console.Write(items[i].Name);
+                Console.Write(Stock.GetStock()[i].Name);
                 Console.Write(",");
-                Console.Write(items[i].Price);
+                Console.Write(Stock.GetStock()[i].Price);
                 Console.WriteLine();
             }
 

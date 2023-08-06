@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ItemList>
+  <Item>
+    <Id>1</Id>
+    <Price>98</Price>
+    <Name>abc</Name>
+  </Item>
+  <Item>
+    <Id>2</Id>
+    <Price>97</Price>
+    <Name>def</Name>
+  </Item>
+  <Item>
+    <Id>3</Id>
+    <Price>96</Price>
+    <Name>ghi</Name>
+  </Item>
+  <Item>
+    <Id>4</Id>
+    <Price>95</Price>
+    <Name>jkl</Name>
+  </Item>
+</ItemList>
