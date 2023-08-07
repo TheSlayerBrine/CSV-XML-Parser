@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CsvXmlParser.Repositories
 {
-    public interface ICsvRepository
+    public interface IRepository
     {
       
         public void SellItem(Item newItem);//Create new Item

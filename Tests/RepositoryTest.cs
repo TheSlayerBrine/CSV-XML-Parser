@@ -9,7 +9,7 @@ using CsvXmlParser;
 
 namespace Tests
 {
-    public class CsvRepositoryTest
+    public class RepositoryTest
     {
 
         [Theory]
@@ -17,7 +17,7 @@ namespace Tests
         public void BuyItemTestSuccess(int[] initialStockIds, int idOfBoughtItem, int[] expectedStockIds)
         {
             //Arrange
-            var repo = new CsvRepository();
+            var repo = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {
@@ -44,7 +44,7 @@ namespace Tests
         public void BuyItemThrowErrorTest(int[] initialStockIds, int idOfBoughtItem, int[] expectedStockIds)
         {
             //Arrange
-            var repo = new CsvRepository();
+            var repo = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {
@@ -67,7 +67,7 @@ namespace Tests
         public void TestSellItem(int[] initialStockIds, int newItemId, int[] expectedStockIds)
         {
             //Arrange
-            var repository = new CsvRepository();
+            var repository = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {
@@ -96,7 +96,7 @@ namespace Tests
         public void TestEditNameOfSpecificItemSuccess(int[] initialStockIds, int itemIdToEdit, string newName, string[] expectedNames)
         {
             //Arrange
-            var repository = new CsvRepository();
+            var repository = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {
@@ -117,7 +117,7 @@ namespace Tests
         public void TestEditNameOfSpecificItemExceptionThrow(int[] initialStockIds, int itemIdToEdit, string newName, string[] expectedNames)
         {
             //Arrange
-            var repository = new CsvRepository();
+            var repository = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {
@@ -137,7 +137,7 @@ namespace Tests
         public void TestEditPriceSuccess(int[] initialStockIds, int itemIdToEdit, double newPrice, double[] expectedPrices)
         {
             //Arrange
-            var repository = new CsvRepository();
+            var repository = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {
@@ -158,7 +158,7 @@ namespace Tests
         public void TestEditPriceThrowError(int[] initialStockIds, int itemIdToEdit, double newPrice, double[] expectedPrices)
         {
             //Arrange
-            var repository = new CsvRepository();
+            var repository = new Repository();
             List<Item> initialStock = new List<Item>();
             foreach (var id in initialStockIds)
             {

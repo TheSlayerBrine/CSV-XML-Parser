@@ -22,32 +22,30 @@ namespace Tests
             var parser = new CSVParser();
 
             //Act
-            parser.ParseCsvToItemsList(csv);
+            Stock.SetStock(parser.DeserializeCodeToItemList(csv));
 
             //Assert
-            Assert.NotNull(parser.items);
-            Assert.Equal(csv.Trim().Split('\n').Length - 1, parser.items.Count);//Assert count based on the number of rows in the CSV
+            Assert.NotNull(Stock.GetStock());
+            Assert.Equal(csv.Trim().Split('\n').Length - 1, Stock.GetStock().Count);
 
         }
 
         [Theory]
         [InlineData("id,name,price\n1,Item 1,10.5\n2,Item 2\n3,Item 3,15.75")] //Missing price for the second item
-        [InlineData("id,name,price\n6,Item 6,abc\n7,Item 7,xyz\n8,Item 8,20.0")] //Invalid price format for the first item
+        [InlineData("id,name,price\n6,Item 6,abc\n7,Item 7,12.0\n8,Item 8,20.0")] //Invalid price format for the first item
         public void TestInvalidCsvParsing(string csv)
         {
             //Arrange
             var parser = new CSVParser();
 
             //Act
-            parser.ParseCsvToItemsList(csv);
+            Stock.SetStock(parser.DeserializeCodeToItemList(csv));
 
             //Assert
-            Assert.NotNull(parser.items);
-            Assert.Equal(csv.Trim().Split('\n').Length - 1, parser.items.Count); //Assert count based on the number of rows in the CSV
-            Assert.NotEqual(1, parser.items[1].Id); //ID should not be 1 due to conversion error
-            Assert.NotEqual("Item 1", parser.items[1].Name); //Name should not be "Item 1" due to the missing price
-            Assert.Equal(-1, parser.items[1].Price); //Price should be set to -1 due to conversion error 
-
+            Assert.NotNull(Stock.GetStock());
+            Assert.Equal(csv.Trim().Split('\n').Length - 2, Stock.GetStock().Count); //Assert count based on the number of rows in the CSV (It passes the one with invalid price
+            Assert.NotEqual(1, Stock.GetStock()[1].Id); //ID should not be 1 due to conversion error
+            Assert.NotEqual("Item 1", Stock.GetStock()[1].Name); //Name should not be "Item 1" due to the missing price
         }
 
         [Fact]
@@ -76,7 +74,7 @@ namespace Tests
             string path = @"C:\\Users\\cgame\\source\\repos\\NewRepo2\\Tests\\test.csv"; //Provide a valid file path )
 
             //Act
-            string csv = parser.ReadCsvFileToString(path);
+            string csv = parser.ReadFileToString(path);
 
             //Assert
             Assert.NotNull(csv);

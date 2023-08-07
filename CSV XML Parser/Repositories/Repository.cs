@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CsvXmlParser.Repositories
 {
-    public class CsvRepository : ICsvRepository
+    public class Repository : IRepository
     {
         public void BuyItemFromStock(int itemId)
         {

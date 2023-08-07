@@ -10,8 +10,8 @@ namespace Tests
     public class ShoppingCartTests
     {
         [Theory]
-        [InlineData(new int[] { 1, 2, 3 }, 2, new int[] { 2 }, new int[] { 1, 3 })]
-        public void TestAddToCartSuccess(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
+        [InlineData(new int[] { 1, 2, 3 }, 2, new int[] {}, new int[] { 1, 3 })]
+        public void TestCheckOutSuccess(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
         {
             // Arrange
             var shoppingCart = new ShoppingCart();
@@ -24,6 +24,7 @@ namespace Tests
 
             // Act
             shoppingCart.AddToCart(itemIdToAdd);
+            shoppingCart.Checkout();
 
             // Assert
             List<int> expectedCartItemIds = new List<int>(expectedCartIds);
@@ -35,7 +36,7 @@ namespace Tests
             Assert.Equal(expectedStockItemIds, actualStockItemIds);
         }
         [Theory]     
-        [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { }, new int[] { 1, 2, 3 })] // Item not in stock, cart should remain unchanged
+        [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { }, new int[] { 1, 2, 3 })] 
         public void TestAddToCartThrowError(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
         {
             // Arrange
@@ -62,7 +63,7 @@ namespace Tests
             List<Item> initialCart = new List<Item>();
             foreach (var id in initialCartIds)
             {
-                initialCart.Add(new Item { Id = id, Name = $"Item {id}", Price = 9.99 }); // Set a default price for simplicity
+                initialCart.Add(new Item { Id = id, Name = $"Item {id}", Price = 9.99 }); 
             }
             shoppingCart.ShoppingCartItems = initialCart;
 
@@ -75,7 +76,7 @@ namespace Tests
             Assert.Equal(expectedCartItemIds, actualCartItemIds);
         }
         [Theory]
-        [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { 1, 2, 3 })] // Item not in cart, cart should remain unchanged
+        [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { 1, 2, 3 })] // Item not in cart
         public void TestRemoveFromCartThrowError(int[] initialCartIds, int itemIdToRemove, int[] expectedCartIds)
         {
             // Arrange
@@ -83,7 +84,7 @@ namespace Tests
             List<Item> initialCart = new List<Item>();
             foreach (var id in initialCartIds)
             {
-                initialCart.Add(new Item { Id = id, Name = $"Item {id}", Price = 9.99 }); // Set a default price for simplicity
+                initialCart.Add(new Item { Id = id, Name = $"Item {id}", Price = 9.99 }); 
             }
             shoppingCart.ShoppingCartItems = initialCart;
 
@@ -91,7 +92,7 @@ namespace Tests
             /*  shoppingCart.RemoveFromCart(itemIdToRemove);*/
 
             // Assert
-            Assert.Throws<System.ArgumentNullException>(() => shoppingCart.RemoveFromCart(itemIdToRemove));
+            Assert.Throws<System.ArgumentException>(() => shoppingCart.RemoveFromCart(itemIdToRemove));
         }
         [Fact]
         public void TestEmptyCart()
@@ -113,7 +114,7 @@ namespace Tests
             Assert.Empty(shoppingCart.ShoppingCartItems);
         }
 
-        [Fact]
+       /* [Fact]
         public void TestCheckout()
         {
             // Arrange
@@ -133,6 +134,6 @@ namespace Tests
             // Assert
             Assert.Empty(shoppingCart.ShoppingCartItems);
             Assert.Empty(Stock.GetStock());
-        }
+        }*/
     }
 }

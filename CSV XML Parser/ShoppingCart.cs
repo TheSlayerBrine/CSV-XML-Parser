@@ -20,22 +20,21 @@ namespace CsvXmlParser
             {
                 var itemToAdd = Stock.GetStock()[itemIndex];
                 ShoppingCartItems.Add(itemToAdd);
-                Stock.RemoveFromStock(itemToAdd);
             }
             else
-            throw new ArgumentException($"Element with id {itemId} is not in stock");
+                throw new ArgumentException($"Element with id {itemId} is not in stock");
         }
         public void RemoveFromCart(int itemId) 
         {
-            var itemToRemove = Stock.GetStock().FirstOrDefault(item => item.Id == itemId);
-            if (itemToRemove.Id != -1)
+            var itemToRemove = ShoppingCartItems.FirstOrDefault(item => item.Id == itemId);
+            if (itemToRemove is not null)
             ShoppingCartItems.Remove(itemToRemove);
             else throw new ArgumentException($"Item with Id {itemId} is not in cart");
 
         }
         public void EmptyCart() 
         {
-           ShoppingCartItems = new List<Item>();
+           ShoppingCartItems.Clear();
         }
         public void ShowCart()
         {

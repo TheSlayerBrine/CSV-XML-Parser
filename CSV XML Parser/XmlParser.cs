@@ -5,28 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace CsvXmlParser
 {
-   public class XmlParser
+   public class XmlParser : Parser
     {
-        public void ParseXmlToItemList()
+      
+        public override List<Item> DeserializeCodeToItemList(string xml)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("example.xml");
-            var ListOfItems = new List<Item>();
-            foreach(XmlNode node in doc.DocumentElement) 
+            List<Item> items = new List<Item>();
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Item>), new XmlRootAttribute("ItemList"));
+            using (StringReader reader = new StringReader(xml))
             {
-                string name = node["Name"].Value;
-                int id = int.Parse(node["Id"].Value);
-                double price = double.Parse(node["Price"].Value);
-                ListOfItems.Add(new Item {Name =  name, Id =  id, Price = price });
+                if (serializer.Deserialize(reader) is List<Item> itemList)
+                {
+                    items = itemList;
+                }
             }
-            Stock.SetStock(ListOfItems);
+
+            return items;
         }
-        public void OutputXmlTest()
+        public override void SerializeItemsToCode(string filePath, List<Item> items)
         {
-            Stock.
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Item>), new XmlRootAttribute("ItemList"));
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                serializer.Serialize(writer, items);
+            }
         }
     }
 }

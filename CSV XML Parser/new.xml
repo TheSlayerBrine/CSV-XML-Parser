@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ItemList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Item>
+    <Id>1</Id>
+    <Name>abc</Name>
+    <Price>98</Price>
+  </Item>
+  <Item>
+    <Id>2</Id>
+    <Name>def</Name>
+    <Price>97</Price>
+  </Item>
+  <Item>
+    <Id>3</Id>
+    <Name>ionescu antonio</Name>
+    <Price>1</Price>
+  </Item>
+  <Item>
+    <Id>4</Id>
+    <Name>paul paulica</Name>
+    <Price>2</Price>
+  </Item>
+  <Item>
+    <Id>5</Id>
+    <Name>ionescu alexandra</Name>
+    <Price>3</Price>
+  </Item>
+</ItemList>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,13 +8,8 @@ using System.Threading.Tasks;
 
 namespace CsvXmlParser
 {
-    public class CSVParser : ICSVParser
+    public class CSVParser : Parser
     {            
-        public string ReadCsvFileToString (string path)
-        {
-            var RawCSV = System.IO.File.ReadAllText(path);
-            return RawCSV;
-        }
         public string[] SplitCsvStringToLines(string csv)
         {
             
@@ -30,7 +26,7 @@ namespace CsvXmlParser
             }
             
         }
-        public void ParseCsvToItemsList(string csv)
+        public override List<Item> DeserializeCodeToItemList(string csv)
         {
             var newList = new List<Item>();
 
@@ -57,31 +53,34 @@ namespace CsvXmlParser
                 {
                     convPrice = -1;
                 }
-               
-                var newItem = new Item
+                if(convId >0 && convPrice >=0)
                 {
-                      Id = convId,
-                    Price = convPrice,
-                    Name = rowData[1],
+                    var newItem = new Item
+                    {
+                        Id = convId,
+                        Price = convPrice,
+                        Name = rowData[1],
 
-                };
-                newList.Add(newItem);
-           
+                    };
+                    newList.Add(newItem);
+                }
             }
-            Stock.SetStock(newList);          
+            return newList;          
         }
-        public void OutputTest()
-        {
-            for(int i =0; i< Stock.GetStock().Count;i++ )
-            {
-                Console.Write(Stock.GetStock()[i].Id );
-                Console.Write (",");              
-                Console.Write(Stock.GetStock()[i].Name);
-                Console.Write(",");
-                Console.Write(Stock.GetStock()[i].Price);
-                Console.WriteLine();
-            }
 
+        public override void SerializeItemsToCode(string filePath, List<Item> items)
+        {
+            if(items == null || items.Count == 0)
+            {
+                throw new ArgumentException("The list of items is empty.");
+            }
+            StringBuilder csvContent = new StringBuilder();
+            csvContent.AppendLine("Id,Name,Price"); //header
+            foreach(var item in items)
+            {
+                csvContent.AppendLine($"{item.Id},{item.Name},{item.Price}");
+            }
+            File.WriteAllText(filePath, csvContent.ToString());
         }
     }
 }
