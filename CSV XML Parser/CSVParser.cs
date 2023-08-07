@@ -10,7 +10,7 @@ namespace CsvXmlParser
 {
     public class CSVParser : Parser
     {            
-        public string[] SplitCsvStringToLines(string csv)
+       public string[] SplitCsvStringToLines(string csv)
         {
             
             using (StringReader reader = new StringReader(csv))

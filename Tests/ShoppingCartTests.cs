@@ -11,7 +11,7 @@ namespace Tests
     {
         [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 2, new int[] {}, new int[] { 1, 3 })]
-        public void TestCheckOutSuccess(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
+        public void Checkout_RemoveItem_FromStock_RemoveItem_FromCart(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
         {
             // Arrange
             var shoppingCart = new ShoppingCart();
@@ -37,7 +37,7 @@ namespace Tests
         }
         [Theory]     
         [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { }, new int[] { 1, 2, 3 })] 
-        public void TestAddToCartThrowError(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
+        public void Add_Item_ToCartList(int[] initialStockIds, int itemIdToAdd, int[] expectedCartIds, int[] expectedStockIds)
         {
             // Arrange
             var shoppingCart = new ShoppingCart();
@@ -56,7 +56,7 @@ namespace Tests
         }
         [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 2, new int[] { 1, 3 })]
-        public void TestRemoveFromCartSuccess(int[] initialCartIds, int itemIdToRemove, int[] expectedCartIds)
+        public void Remove_Item_FromCart_List(int[] initialCartIds, int itemIdToRemove, int[] expectedCartIds)
         {
             // Arrange
             var shoppingCart = new ShoppingCart();
@@ -77,7 +77,7 @@ namespace Tests
         }
         [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { 1, 2, 3 })] // Item not in cart
-        public void TestRemoveFromCartThrowError(int[] initialCartIds, int itemIdToRemove, int[] expectedCartIds)
+        public void Remove_Item_FromCart_List_Throw_Error(int[] initialCartIds, int itemIdToRemove, int[] expectedCartIds)
         {
             // Arrange
             var shoppingCart = new ShoppingCart();
@@ -95,7 +95,7 @@ namespace Tests
             Assert.Throws<System.ArgumentException>(() => shoppingCart.RemoveFromCart(itemIdToRemove));
         }
         [Fact]
-        public void TestEmptyCart()
+        public void Clear_Cart_RemoveAllItems()
         {
             // Arrange
             var shoppingCart = new ShoppingCart();
@@ -114,26 +114,5 @@ namespace Tests
             Assert.Empty(shoppingCart.ShoppingCartItems);
         }
 
-       /* [Fact]
-        public void TestCheckout()
-        {
-            // Arrange
-            var shoppingCart = new ShoppingCart();
-            var initialCart = new List<Item>
-            {
-                new Item { Id = 1, Name = "Item 1", Price = 9.99 },
-                new Item { Id = 2, Name = "Item 2", Price = 20.0 },
-                new Item { Id = 3, Name = "Item 3", Price = 15.0 }
-            };
-            Stock.SetStock(initialCart);
-            shoppingCart.ShoppingCartItems = initialCart;
-
-            // Act
-            shoppingCart.Checkout();
-
-            // Assert
-            Assert.Empty(shoppingCart.ShoppingCartItems);
-            Assert.Empty(Stock.GetStock());
-        }*/
     }
 }

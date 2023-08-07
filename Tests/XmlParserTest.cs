@@ -11,7 +11,7 @@ namespace Tests
     {
         [Theory]
         [InlineData(@"C:\Users\cgame\source\repos\NewRepo2\CSV XML Parser\example.xml")]
-        public void TestDeserializeCodeToItemList(string xmlFilePath)
+        public void Get_ItemsList_From_FilePath(string xmlFilePath)
         {
             // Arrange
             var parser = new XmlParser();
@@ -27,7 +27,7 @@ namespace Tests
 
         [Theory]
         [InlineData(@"C:\Users\cgame\source\repos\NewRepo2\Tests\testxml.xml")]
-        public void TestSerializeItemsToCode(string xmlFilePath)
+        public void Add_ItemsList_ToFile(string xmlFilePath)
         {
             // Arrange
             var parser = new XmlParser();

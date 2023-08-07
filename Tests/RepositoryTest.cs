@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xunit;
 using CsvXmlParser.Repositories;
 using CsvXmlParser;
+using FluentAssertions;
 
 namespace Tests
 {
@@ -14,7 +15,7 @@ namespace Tests
 
         [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 2,new int[]  { 1, 3 })]   
-        public void BuyItemTestSuccess(int[] initialStockIds, int idOfBoughtItem, int[] expectedStockIds)
+        public void Buy_Remove_ItemFromList_Return_ListWithout_RemovedItem(int[] initialStockIds, int idOfBoughtItem, int[] expectedStockIds)
         {
             //Arrange
             var repo = new Repository();
@@ -41,7 +42,7 @@ namespace Tests
         }
         [Theory]
         [InlineData(new int[] { 4, 5, 6 }, 7, new int[] { 4, 5, 6 })] //Item not in stock, stock should remain unchanged
-        public void BuyItemThrowErrorTest(int[] initialStockIds, int idOfBoughtItem, int[] expectedStockIds)
+        public void Buy_Remove_ItemFromList_Throw_Error(int[] initialStockIds, int idOfBoughtItem, int[] expectedStockIds)
         {
             //Arrange
             var repo = new Repository();
@@ -55,16 +56,16 @@ namespace Tests
             Item itemToBuy = new Item { Id = idOfBoughtItem, Name = $"Item {idOfBoughtItem}", Price = 9.99 };
 
             //Act
-           /* repo.BuyItemFromStock(itemToBuy.Id);*/
+            Action act = () => repo.BuyItemFromStock(itemToBuy.Id);
 
             //Assert
-          
-            Assert.Throws<System.ArgumentException> (() => repo.BuyItemFromStock(itemToBuy.Id));
+
+            act.Should().ThrowExactly<ArgumentException>();
         }
             [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 4, new int[] { 1, 2, 3, 4 })]
         [InlineData(new int[] { 5, 6 }, 7, new int[] { 5, 6, 3 })]
-        public void TestSellItem(int[] initialStockIds, int newItemId, int[] expectedStockIds)
+        public void Sell_Item_CountOfStock_Equals_AddedNumberId(int[] initialStockIds, int newItemId, int[] expectedStockIds)
         {
             //Arrange
             var repository = new Repository();
@@ -93,7 +94,7 @@ namespace Tests
         }
         [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 2, "New Name", new string[] { "Item 1", "New Name", "Item 3" })]
-        public void TestEditNameOfSpecificItemSuccess(int[] initialStockIds, int itemIdToEdit, string newName, string[] expectedNames)
+        public void Edit_NameOfItem_Return_ChangedName(int[] initialStockIds, int itemIdToEdit, string newName, string[] expectedNames)
         {
             //Arrange
             var repository = new Repository();
@@ -114,7 +115,7 @@ namespace Tests
         }
         [Theory]
         [InlineData(new int[] { 4, 5, 6 }, 7, "New Item", new string[] { "Item 4", "Item 5", "Item 6" })] //Item not in stock, stock should remain unchanged
-        public void TestEditNameOfSpecificItemExceptionThrow(int[] initialStockIds, int itemIdToEdit, string newName, string[] expectedNames)
+        public void Edit_NameOfItem_Throw_Error(int[] initialStockIds, int itemIdToEdit, string newName, string[] expectedNames)
         {
             //Arrange
             var repository = new Repository();
@@ -126,15 +127,15 @@ namespace Tests
             Stock.SetStock(initialStock);
 
             //Act
-/*            repository.EditNameOfSpecificItem(itemIdToEdit, newName);*/
+            Action act = () => repository.EditNameOfSpecificItem(itemIdToEdit, newName);
 
             //Assert
-            
-            Assert.Throws<System.ArgumentException>(() => repository.EditNameOfSpecificItem(itemIdToEdit, newName));
+
+           act.Should().ThrowExactly<ArgumentException>();
         }
         [Theory]
         [InlineData(new int[] { 1, 2, 3 }, 2, 15.5, new double[] { 9.99, 15.5, 9.99 })]
-        public void TestEditPriceSuccess(int[] initialStockIds, int itemIdToEdit, double newPrice, double[] expectedPrices)
+        public void Edit_PriceOfItem_Return_ChangedPrice(int[] initialStockIds, int itemIdToEdit, double newPrice, double[] expectedPrices)
         {
             //Arrange
             var repository = new Repository();
@@ -155,7 +156,7 @@ namespace Tests
         }
         [Theory]
         [InlineData(new int[] { 4, 5, 6 }, 7, 20.0, new double[] { 9.99, 9.99, 9.99 })] //Item not in stock, stock should remain unchanged
-        public void TestEditPriceThrowError(int[] initialStockIds, int itemIdToEdit, double newPrice, double[] expectedPrices)
+        public void Edit_PriceOfItem_Throw_Error(int[] initialStockIds, int itemIdToEdit, double newPrice, double[] expectedPrices)
         {
             //Arrange
             var repository = new Repository();
@@ -167,8 +168,7 @@ namespace Tests
             Stock.SetStock(initialStock);
 
             //Act
-         /*   repository.EditPriceOfSpecificItem(itemIdToEdit, newPrice);*/
-
+            Action act = () => repository.EditPriceOfSpecificItem(itemIdToEdit, newPrice);
             //Assert
             Assert.Throws<System.ArgumentException>(() => repository.EditPriceOfSpecificItem(itemIdToEdit, newPrice));
         }

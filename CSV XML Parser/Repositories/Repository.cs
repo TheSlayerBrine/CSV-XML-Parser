@@ -60,7 +60,8 @@ namespace CsvXmlParser.Repositories
 
         public void SellItem(Item newItem)
         {
-            newItem.Id= Stock.GetStock().Count()+1;
+            Stock.existingCount++;
+            newItem.Id= Stock.existingCount;
            Stock.GetStock().Add(newItem);
         }
 

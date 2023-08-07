@@ -16,7 +16,7 @@ namespace Tests
         [Theory]
         [InlineData("id,name,price\n1,Item 1,10.5\n2,Item 2,20.0\n3,Item 3,15.75")]
         [InlineData("id,name,price\n4,Item 4,30.0\n5,Item 5,25.5")]
-        public void TestValidCsvParsing(string csv)
+        public void Parse_Valid_Csv_NumberOfLine_Equals_NumberOfItems(string csv)
         {
             //Arrange
             var parser = new CSVParser();
@@ -33,7 +33,7 @@ namespace Tests
         [Theory]
         [InlineData("id,name,price\n1,Item 1,10.5\n2,Item 2\n3,Item 3,15.75")] //Missing price for the second item
         [InlineData("id,name,price\n6,Item 6,abc\n7,Item 7,12.0\n8,Item 8,20.0")] //Invalid price format for the first item
-        public void TestInvalidCsvParsing(string csv)
+        public void Parse_Invalid_Csv_AddToList_Only_Valid_Items(string csv)
         {
             //Arrange
             var parser = new CSVParser();
@@ -49,7 +49,7 @@ namespace Tests
         }
 
         [Fact]
-        public void TestGetCsvLines()
+        public void Split_EachLine_Into_VectorOfStrings_Check_AllLines()
         {
             //Arrange
             var parser = new CSVParser();
@@ -67,7 +67,7 @@ namespace Tests
         }
 
         [Fact]
-        public void TestReadCsvFileToString()
+        public void Read_Csv_File_Return_NotNull()
         {
             //Arrange
             var parser = new CSVParser();
